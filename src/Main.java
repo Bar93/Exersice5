@@ -40,6 +40,7 @@ public class Main {
                 }else {
                     onlineUser = store.getUsers()[indexOfUser];
                 }
+                System.out.println("----------------------------------------------------");
                     if (onlineUser instanceof Client) {
                         if (store.getProducts()==null){
                             System.out.println("the store are closed");
@@ -52,6 +53,7 @@ public class Main {
                         }
                         Cart newCart = store.shopping(onlineUser);
                         onlineUser.addCart(newCart);
+                        break;
                     }
                     if (onlineUser instanceof Worker) {
                         if (((Worker) onlineUser).getRank() == 1) {
