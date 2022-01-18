@@ -239,6 +239,7 @@ public class Store {
         int num =1;
         while (index<products.length){
                 System.out.println(num+". " + products[index].toString());
+                System.out.println("------------");
                 num++;
                 index++;
             }
@@ -272,6 +273,7 @@ public class Store {
             if (this.users[i] instanceof Client){
                 num++;
                 System.out.println(num +". "+printClient(this.users[i]));
+                System.out.println("-----");
             }
         }
     }
@@ -282,6 +284,7 @@ public class Store {
             if (this.users[i] instanceof Client && ((Client) this.users[i]).getIsVip()==true){
                 num++;
                 System.out.println(num +". "+printClient(this.users[i]));
+                System.out.println("-----");
             }
         }
     }
@@ -291,6 +294,7 @@ public class Store {
             if (this.users[i].getPersonalCart()!=null) {
                 num++;
                 System.out.println(num + ". "+ printClient(this.users[i])+ "  have a one purchase at least ");
+                System.out.println("-----");
             }
         }
         if (num ==0){
@@ -434,10 +438,10 @@ public class Store {
                 vip = "{NO VIP}";
             }
         }
-        user = "First Name:"+userToPrint.getFirstName()+"Last Name:"+userToPrint.getLastName()+"\n"+
+        user = "First Name: "+userToPrint.getFirstName()+"  Last Name:"+userToPrint.getLastName()+"\n"+
                 vip + workerKind+"\n"+
-                "Number of porchase:"+numOfPorchase+"Total porchase"+totalPorchase+"\n"+
-                "Last porchase"+lastPorchase;
+                "Number of porchase: "+numOfPorchase+"  Total porchase"+totalPorchase+"\n"+
+                "Last porchase  "+lastPorchase;
         return user;
     }
 
