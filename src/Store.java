@@ -1,3 +1,6 @@
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Scanner;
 
 public class Store {
@@ -5,6 +8,10 @@ public class Store {
     private User [] users;
     private Product [] products;
     public static final int MIN_CHARS_IN_PASSWORD = 6;
+    public static final int FINISH_BUY = -1;
+    public static final int RANK_REGULAR_WORKER = 1;
+    public static final int RANK_MANAGER = 2;
+    public static final int RANK_MANGER_MEMBER = 3;
 
     public Store() {
         User [] users = new User[0];
@@ -126,6 +133,7 @@ public class Store {
             vipChoice = scanner.nextInt();
             while (vipChoice!=1&& vipChoice!=2){
                 System.out.println("are you VIP member?"+"\n"+"1. yes"+"\n"+"2. no");
+                vipChoice=scanner.nextInt();
             }
             if (vipChoice==1){
                 vip = true;
@@ -202,7 +210,7 @@ public class Store {
             printProduct(productsInStock);
             System.out.println("pleas choice product from the list. for finis -1");
             userChoice = scanner.nextInt();
-            if (userChoice==-1){
+            if (userChoice==FINISH_BUY){
                 break;
             }
             while (userChoice < 1 || userChoice > productsInStock.length) {
@@ -263,7 +271,7 @@ public class Store {
         for (int i=0; i<this.users.length;i++){
             if (this.users[i] instanceof Client){
                 num++;
-                System.out.println(num +". "+this.users[i].getFirstName() + "  "+ this.users[i].getLastName());
+                System.out.println(num +". "+printClient(this.users[i]));
             }
         }
     }
@@ -273,7 +281,7 @@ public class Store {
         for (int i=0; i<this.users.length;i++){
             if (this.users[i] instanceof Client && ((Client) this.users[i]).getIsVip()==true){
                 num++;
-                System.out.println(num +". "+this.users[i].getFirstName() + "  "+ this.users[i].getLastName()+"  VIP");
+                System.out.println(num +". "+printClient(this.users[i]));
             }
         }
     }
@@ -282,7 +290,7 @@ public class Store {
         for (int i = 0; i < this.users.length; i++) {
             if (this.users[i].getPersonalCart()!=null) {
                 num++;
-                System.out.println(num + ". " + this.users[i].getFirstName() + "  " + this.users[i].getLastName() + "  have a one purchase at least ");
+                System.out.println(num + ". "+ printClient(this.users[i])+ "  have a one purchase at least ");
             }
         }
         if (num ==0){
@@ -306,7 +314,7 @@ public class Store {
                 System.out.println("no have client that purchased");
             }
             else {
-                System.out.println("the Client with biggest purchase is:" + this.users[index].getFirstName() + " " + this.users[index].getLastName() +
+                System.out.println("the Client with biggest purchase is:"+"\n"+printClient(this.users[index])+"\n"+
                         " and he purchase in:" + biggestPurchase);
             }
         }
@@ -365,7 +373,7 @@ public class Store {
     public void stockStatus (){
         Scanner scanner = new Scanner(System.in);
         printProduct(this.products);
-        int index = 0;
+        int index;
         System.out.println("enter a number of products to chance");
         index = scanner.nextInt()-1;
         while (index<0 || index>this.products.length){
@@ -391,6 +399,46 @@ public class Store {
             }
         }
 
+    }
+
+    public String printClient (User userToPrint){
+        String vip="", workerKind="",user;
+        double totalPorchase=0;
+        int numOfPorchase=0;
+        Date lastPorchase = new Date();
+        int index = 0;
+        if (userToPrint.getPersonalCart()!=null) {
+            while (index < userToPrint.getPersonalCart().length) {
+                totalPorchase = totalPorchase + userToPrint.getPersonalCart()[index].getTotalPrice();
+                numOfPorchase++;
+                index++;
+            }
+            lastPorchase = userToPrint.getPersonalCart()[userToPrint.getPersonalCart().length-1].getPurchaseDate();
+        }
+        if (userToPrint instanceof Worker) {
+            if (((Worker) userToPrint).getRank() == RANK_REGULAR_WORKER) {
+                workerKind = "{regular worker}";
+            }
+            if (((Worker) userToPrint).getRank() == RANK_MANAGER) {
+                workerKind = "{maneger}";
+            }
+            if (((Worker) userToPrint).getRank() == RANK_MANGER_MEMBER) {
+                workerKind = "{member manager}";
+            }
+        }
+        if (userToPrint instanceof Client) {
+            if (((Client) userToPrint).getIsVip() == true) {
+                vip = "{VIP}";
+            }
+            if (((Client) userToPrint).getIsVip() == false) {
+                vip = "{NO VIP}";
+            }
+        }
+        user = "First Name:"+userToPrint.getFirstName()+"Last Name:"+userToPrint.getLastName()+"\n"+
+                vip + workerKind+"\n"+
+                "Number of porchase:"+numOfPorchase+"Total porchase"+totalPorchase+"\n"+
+                "Last porchase"+lastPorchase;
+        return user;
     }
 
 }

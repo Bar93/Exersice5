@@ -1,6 +1,11 @@
 import java.util.Scanner;
 
 public class Main {
+
+    public static final int RANK_REGULAR_WORKER = 1;
+    public static final int RANK_MANAGER = 2;
+    public static final int RANK_MANGER_MEMBER = 3;
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Store store = new Store();
@@ -56,13 +61,13 @@ public class Main {
                         break;
                     }
                     if (onlineUser instanceof Worker) {
-                        if (((Worker) onlineUser).getRank() == 1) {
+                        if (((Worker) onlineUser).getRank() == RANK_REGULAR_WORKER) {
                             System.out.println("Hello" + "\n" + onlineUser.getFirstName() + " " + onlineUser.getLastName() + "  {regular worker} ");
                         }
-                        if (((Worker) onlineUser).getRank() == 2) {
+                        if (((Worker) onlineUser).getRank() == RANK_MANAGER) {
                             System.out.println("Hello" + "\n" + onlineUser.getFirstName() + " " + onlineUser.getLastName() + "  {manger} ");
                         }
-                        if (((Worker) onlineUser).getRank() == 3) {
+                        if (((Worker) onlineUser).getRank() == RANK_MANGER_MEMBER) {
                             System.out.println("Hello" + "\n" + onlineUser.getFirstName() + " " + onlineUser.getLastName() + "  {manager member} ");
                         }
                             System.out.println("1.print all client" + "\n" + "2. print VIP client" + "\n" + "3. print client with one purchase" + "\n" + "4. client with the biggest purchases"
@@ -71,7 +76,7 @@ public class Main {
                             while (secondUserChoice < 1 || secondUserChoice > 8) {
                                 System.out.println("enter correct number");
                                 System.out.println("1.print all client" + "\n" + "2. print VIP client" + "\n" + "3. print client with one purchase" + "\n" + "4. client with the biggest purchases"
-                                        + "\n" + "5. add product" + "\n" + "6. stocke status" + "\n" + "7. shopping" + "\n" + "8. logout");
+                                        + "\n" + "5. add product" + "\n" + "6. stock status" + "\n" + "7. shopping" + "\n" + "8. logout");
                                 secondUserChoice = scanner.nextInt();
                             }
                             if (secondUserChoice == 1) {

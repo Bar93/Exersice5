@@ -1,14 +1,21 @@
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 
 public class Cart {
 
     private Product [] productsCart;
     private double totalPrice;
-    private Calendar purchaseDate;
+    private Date purchaseDate;
+    public static final double DISCOUNT_REGULAR_WORKER = 0.1;
+    public static final double DISCOUNT_MANAGER = 0.2;
+    public static final double DISCOUNT_MANGER_MEMBER = 0.3;
+    public static final int RANK_REGULAR_WORKER = 1;
+    public static final int RANK_MANAGER = 2;
+    public static final int RANK_MANGER_MEMBER = 3;
 
     public Cart() {
-        Calendar rightNow = Calendar.getInstance();
+        Date rightNow = new Date();
         Product [] productsCart = new Product[0];
         this.totalPrice =0;
         this.purchaseDate = rightNow;
@@ -30,11 +37,11 @@ public class Cart {
         this.totalPrice = totalPrice;
     }
 
-    public Calendar getPurchaseDate() {
+    public Date getPurchaseDate() {
         return purchaseDate;
     }
 
-    public void setPurchaseDate(Calendar purchaseDate) {
+    public void setPurchaseDate(Date purchaseDate) {
         this.purchaseDate = purchaseDate;
     }
 
@@ -81,16 +88,16 @@ public class Cart {
                 }
             }
             if (onlineUser instanceof Worker){
-                if (((Worker) onlineUser).getRank()==1) {
-                    discount = productsCart[i].getPrice() * 10 / 100;
+                if (((Worker) onlineUser).getRank()==RANK_REGULAR_WORKER) {
+                    discount = productsCart[i].getPrice() * DISCOUNT_REGULAR_WORKER;
                     totalPrice =totalPrice+ productsCart[i].getPrice()-discount;
                 }
-                if (((Worker) onlineUser).getRank()==2) {
-                    discount = productsCart[i].getPrice() * 20 / 100;
+                if (((Worker) onlineUser).getRank()==RANK_MANAGER) {
+                    discount = productsCart[i].getPrice() * DISCOUNT_MANAGER;
                     totalPrice = totalPrice+productsCart[i].getPrice()-discount;
                 }
-                if (((Worker) onlineUser).getRank()==3) {
-                    discount = productsCart[i].getPrice() * 30 / 100;
+                if (((Worker) onlineUser).getRank()==RANK_MANGER_MEMBER) {
+                    discount = productsCart[i].getPrice() * DISCOUNT_MANGER_MEMBER;
                     totalPrice = totalPrice+productsCart[i].getPrice()-discount;
                 }
             }
